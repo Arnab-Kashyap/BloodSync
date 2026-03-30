@@ -28,12 +28,17 @@ const registerUser = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token
-    });
+    res.status(201).json({
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+  bloodGroup: user.bloodGroup,
+  state: user.state,
+  city: user.city,
+  phone: user.phone,
+  isAvailable: user.isAvailable,
+  token: generateToken(user._id),
+});
 
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -57,10 +62,16 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     res.json({
-      _id: user._id,
-      email: user.email,
-      token
-    });
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+  bloodGroup: user.bloodGroup,
+  state: user.state,
+  city: user.city,
+  phone: user.phone,
+  isAvailable: user.isAvailable,
+  token: generateToken(user._id),
+});
 
   } catch (error) {
     res.status(500).json({ message: error.message });
