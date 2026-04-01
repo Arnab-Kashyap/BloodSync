@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
   city: user.city,
   phone: user.phone,
   isAvailable: user.isAvailable,
-  token: generateToken(user._id),
+  token
 });
 
   } catch (error) {
@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
   city: user.city,
   phone: user.phone,
   isAvailable: user.isAvailable,
-  token: generateToken(user._id),
+  token
 });
 
   } catch (error) {
