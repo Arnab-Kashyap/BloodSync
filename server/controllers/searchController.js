@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const { getCompatibleGroups, scoreDonor } = require('../utils/scoring');
 
-
 const searchDonors = async (req, res) => {
   const { bloodGroup, state, city } = req.query;
 
@@ -10,25 +9,20 @@ const searchDonors = async (req, res) => {
       return res.status(400).json({ message: 'Blood group and state are required' });
     }
 
-  ps
     const compatibleGroups = getCompatibleGroups(bloodGroup);
-
 
     const query = {
       bloodGroup: { $in: compatibleGroups },
       state: { $regex: new RegExp(state, 'i') },
     };
 
-
     if (city) {
       query.city = { $regex: new RegExp(city, 'i') };
     }
 
-   
     let donors = await User.find(query).select(
       'name bloodGroup state city isAvailable lastDonation donationCount responseRate phone createdAt'
     );
-
 
     if (donors.length === 0 && city) {
       delete query.city;
@@ -36,7 +30,6 @@ const searchDonors = async (req, res) => {
         'name bloodGroup state city isAvailable lastDonation donationCount responseRate phone createdAt'
       );
     }
-
 
     const scoredDonors = donors
       .map((donor) => ({
