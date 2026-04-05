@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-
 dotenv.config();
 connectDB();
 
@@ -14,7 +13,7 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/search', require('./routes/search'));
-
+app.use('/api/requests', require('./routes/request'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'BloodSync API is running' });
