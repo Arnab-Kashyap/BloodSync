@@ -8,12 +8,16 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import Search from './pages/Search'
+import Emergency from './pages/Emergency'
+import Requests from './pages/Requests'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/emergency" element={<PrivateRoute><Emergency /></PrivateRoute>} />
+          <Route path="/requests" element={<Requests />} />
           <Route path="/search" element={<Search />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
