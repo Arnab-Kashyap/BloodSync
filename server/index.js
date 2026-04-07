@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/requests', require('./routes/request'));
+app.use('/api/chat', require('./routes/chat'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'BloodSync API is running' });
