@@ -11,7 +11,7 @@ const chat = async (req, res) => {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash',
       systemInstruction: `You are BloodSync's helpful AI assistant. You help users with questions about:
 - Blood types and compatibility
 - Blood donation eligibility and guidelines
@@ -24,7 +24,7 @@ If someone asks something unrelated to blood donation or BloodSync, politely say
 Never give specific medical advice — always suggest consulting a doctor for medical decisions.`,
     });
 
-    // Build chat history for context
+    
     const chatHistory = (history || []).map((msg) => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: msg.content }],
