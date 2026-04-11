@@ -11,6 +11,7 @@ import Search from './pages/Search'
 import Emergency from './pages/Emergency'
 import Requests from './pages/Requests'
 import PrivateRoute from './components/PrivateRoute'
+import Landing from './pages/Landing'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,13 +19,14 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <App />
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/search" element={<Search />} />
           <Route path="/emergency" element={<PrivateRoute><Emergency /></PrivateRoute>} />
           <Route path="/requests" element={<Requests />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
