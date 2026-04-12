@@ -4,27 +4,17 @@ export default function Landing() {
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", background: '#FFF8F8', minHeight: '100vh' }}>
 
-      {/* NAV */}
       <nav style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 6%', height: 68,
         position: 'sticky', top: 0,
         background: 'rgba(255,248,248,0.95)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(192,57,43,0.08)',
+        borderBottom: '1px solid rgba(204,0,0,0.08)',
         zIndex: 100,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img
-            src="/logo.png"
-            alt="BloodSync"
-            style={{ height: 38 }}
-            onError={(e) => { e.target.style.display = 'none'; }}
-          />
-          <span style={{ fontWeight: 800, fontSize: 20, letterSpacing: '-0.5px' }}>
-            <span style={{ color: '#111' }}>Blood</span>
-            <span style={{ color: '#C0392B' }}>Sync</span>
-          </span>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/logo.png" alt="BloodSync" style={{ height: 160 }} />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -50,27 +40,25 @@ export default function Landing() {
           <Link to="/register" style={{
             fontSize: 14, color: 'white', textDecoration: 'none',
             padding: '8px 22px', borderRadius: 50,
-            background: '#C0392B', fontWeight: 600,
+            background: '#CC0000', fontWeight: 600,
           }}>Join as Donor →</Link>
         </div>
       </nav>
 
-      {/* HERO */}
       <section style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '70px 6% 60px', maxWidth: 1280, margin: '0 auto', gap: 40,
       }}>
-        {/* LEFT */}
         <div style={{ flex: 1, maxWidth: 540 }}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'white', border: '1px solid #F5C6C2',
             borderRadius: 50, padding: '6px 16px', marginBottom: 28,
           }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C0392B">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#CC0000">
               <path d="M12 2C12 2 4 9 4 14a8 8 0 0016 0C20 9 12 2 12 2z"/>
             </svg>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#C0392B', letterSpacing: 0.5 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#CC0000', letterSpacing: 0.5 }}>
               REAL-TIME BLOOD MATCHING
             </span>
           </div>
@@ -80,7 +68,7 @@ export default function Landing() {
             lineHeight: 1.04, letterSpacing: '-2.5px', margin: '0 0 20px', color: '#0F0F0F',
           }}>
             Save Lives.<br />
-            <span style={{ color: '#C0392B' }}>Find Donors.</span><br />
+            <span style={{ color: '#CC0000' }}>Find Donors.</span><br />
             Right Now.
           </h1>
 
@@ -95,7 +83,7 @@ export default function Landing() {
             <Link to="/register" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               textDecoration: 'none', padding: '14px 30px',
-              background: '#C0392B', color: 'white',
+              background: '#CC0000', color: 'white',
               borderRadius: 50, fontSize: 15, fontWeight: 700,
             }}>I Am a Donor →</Link>
             <Link to="/search" style={{
@@ -116,35 +104,33 @@ export default function Landing() {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div style={{ flex: 1, maxWidth: 520, position: 'relative', minHeight: 420 }}>
           <div style={{
             position: 'absolute', top: '50%', left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 340, height: 340, borderRadius: '50%',
-            background: 'rgba(192,57,43,0.06)',
-            border: '1px solid rgba(192,57,43,0.1)',
+            background: 'rgba(204,0,0,0.06)',
+            border: '1px solid rgba(204,0,0,0.1)',
           }} />
           <div style={{
             position: 'absolute', top: '50%', left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 240, height: 240, borderRadius: '50%',
-            background: 'rgba(192,57,43,0.08)',
-            border: '1px solid rgba(192,57,43,0.12)',
+            background: 'rgba(204,0,0,0.08)',
+            border: '1px solid rgba(204,0,0,0.12)',
           }} />
           <div style={{
             position: 'absolute', top: '50%', left: '50%',
             transform: 'translate(-50%, -58%)',
           }}>
             <svg width="110" height="140" viewBox="0 0 100 130">
-              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="#C0392B" opacity="0.12"/>
-              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="none" stroke="#C0392B" strokeWidth="2" opacity="0.3"/>
-              <path d="M50 22C50 22 20 60 20 78a30 30 0 0060 0C80 60 50 22 50 22z" fill="#C0392B"/>
-              <path d="M50 40C50 40 34 64 34 76a16 16 0 0032 0C66 64 50 40 50 40z" fill="#E74C3C" opacity="0.55"/>
+              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="#CC0000" opacity="0.12"/>
+              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="none" stroke="#CC0000" strokeWidth="2" opacity="0.3"/>
+              <path d="M50 22C50 22 20 60 20 78a30 30 0 0060 0C80 60 50 22 50 22z" fill="#CC0000"/>
+              <path d="M50 40C50 40 34 64 34 76a16 16 0 0032 0C66 64 50 40 50 40z" fill="#FF1A1A" opacity="0.55"/>
             </svg>
           </div>
 
-          {/* Float cards */}
           <div style={{ position: 'absolute', top: 24, right: 0, ...floatCard }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#16A34A' }} />
@@ -162,8 +148,8 @@ export default function Landing() {
 
           <div style={{ position: 'absolute', bottom: 80, right: -10, ...floatCard, borderColor: '#FDE8E8' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#C0392B' }} />
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#C0392B' }}>CRITICAL — A− Needed</span>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#CC0000' }} />
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#CC0000' }}>CRITICAL — A− Needed</span>
             </div>
             <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 3 }}>GMCH Guwahati · 2 min ago</div>
           </div>
@@ -175,10 +161,9 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* STATS BAR */}
       <div style={{
-        borderTop: '1px solid rgba(192,57,43,0.1)',
-        borderBottom: '1px solid rgba(192,57,43,0.1)',
+        borderTop: '1px solid rgba(204,0,0,0.1)',
+        borderBottom: '1px solid rgba(204,0,0,0.1)',
         padding: '28px 6%', background: 'white',
       }}>
         <div style={{
@@ -193,18 +178,17 @@ export default function Landing() {
           ].map(s => (
             <div key={s.num} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 18 }}>{s.icon}</span>
-              <span style={{ fontSize: 15, fontWeight: 800, color: '#C0392B' }}>{s.num}</span>
+              <span style={{ fontSize: 15, fontWeight: 800, color: '#CC0000' }}>{s.num}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* HOW IT WORKS */}
       <section id="how" style={{ padding: '80px 6%', maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 52 }}>
           <span style={sectionBadge}>HOW IT WORKS</span>
           <h2 style={{ fontSize: 38, fontWeight: 900, letterSpacing: '-1.5px', marginTop: 14, color: '#0F0F0F' }}>
-            Find a donor in <span style={{ color: '#C0392B' }}>3 simple steps</span>
+            Find a donor in <span style={{ color: '#CC0000' }}>3 simple steps</span>
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
@@ -231,13 +215,12 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* FEATURES */}
       <section style={{ background: '#FFF8F8', padding: '80px 6%' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 52 }}>
             <span style={sectionBadge}>FEATURES</span>
             <h2 style={{ fontSize: 38, fontWeight: 900, letterSpacing: '-1.5px', marginTop: 14, color: '#0F0F0F' }}>
-              Built for <span style={{ color: '#C0392B' }}>emergencies</span>
+              Built for <span style={{ color: '#CC0000' }}>emergencies</span>
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 16 }}>
@@ -262,8 +245,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ background: '#C0392B', padding: '80px 6%', textAlign: 'center' }}>
+      <section style={{ background: '#CC0000', padding: '80px 6%', textAlign: 'center' }}>
         <h2 style={{ fontSize: 40, fontWeight: 900, color: 'white', letterSpacing: '-1.5px', marginBottom: 14 }}>
           Ready to save a life?
         </h2>
@@ -273,7 +255,7 @@ export default function Landing() {
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/register" style={{
             textDecoration: 'none', padding: '14px 32px',
-            background: 'white', color: '#C0392B',
+            background: 'white', color: '#CC0000',
             borderRadius: 50, fontSize: 15, fontWeight: 800,
           }}>Register as Donor →</Link>
           <Link to="/search" style={{
@@ -315,8 +297,8 @@ const floatCard = {
 
 const sectionBadge = {
   display: 'inline-block',
-  background: '#FFF0EF', color: '#C0392B',
+  background: '#FFF0EF', color: '#CC0000',
   fontSize: 12, fontWeight: 700,
   padding: '5px 16px', borderRadius: 50,
   border: '1px solid #FDE8E8', letterSpacing: 0.5,
-};
+}; 
