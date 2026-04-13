@@ -7,40 +7,72 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 h-14 flex items-center justify-between sticky top-0 z-50">
-      <Link to="/" className="font-bold text-xl">
-        <span className="text-red-600">Blood</span>Sync
-      </Link><Link to="/requests" className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-  Requests
+    <nav style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 6%', height: 64,
+      background: 'rgba(255,248,248,0.95)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(204,0,0,0.08)',
+      position: 'sticky', top: 0, zIndex: 100,
+    }}>
+      <Link to="/">
+        <img src="/logo.png" alt="BloodSync" style={{ height: 160 }} />
       </Link>
-       <Link to="/emergency" className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-        Post Emergency
-       </Link>
-      <div className="flex items-center gap-3">
-        <Link to="/search" className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-          Find Donors
-        </Link>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <Link to="/requests" style={navLink}>Requests</Link>
+        <Link to="/search" style={navLink}>Find Donors</Link>
+        {user && <Link to="/emergency" style={navLink}>Post Emergency</Link>}
+        {user && <Link to="/dashboard" style={navLink}>Dashboard</Link>}
+      </div>
+
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
         {user ? (
           <>
-            <Link to="/dashboard" className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-              Dashboard
-            </Link>
-            <button onClick={handleLogout}
-              className="text-sm bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-lg transition-colors">
-              Logout
-            </button>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              background: '#FFF0EF', borderRadius: 50,
+              padding: '6px 14px', border: '1px solid #FDE8E8',
+            }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#16A34A' }} />
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#CC0000' }}>
+                {user.bloodGroup}
+              </span>
+              <span style={{ fontSize: 13, color: '#444', fontWeight: 500 }}>
+                {user.name?.split(' ')[0]}
+              </span>
+            </div>
+            <button onClick={handleLogout} style={{
+              fontSize: 13, color: '#111',
+              padding: '7px 18px', borderRadius: 50,
+              border: '1.5px solid #ddd', fontWeight: 500,
+              background: 'white', cursor: 'pointer',
+            }}>Logout</button>
           </>
         ) : (
-          <Link to="/login"
-            className="text-sm bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-lg transition-colors">
-            Sign In
-          </Link>
+          <>
+            <Link to="/login" style={{
+              fontSize: 14, color: '#111', textDecoration: 'none',
+              padding: '7px 18px', borderRadius: 50,
+              border: '1.5px solid #ddd', fontWeight: 500, background: 'white',
+            }}>Sign In</Link>
+            <Link to="/register" style={{
+              fontSize: 14, color: 'white', textDecoration: 'none',
+              padding: '7px 20px', borderRadius: 50,
+              background: '#CC0000', fontWeight: 600,
+            }}>Join as Donor →</Link>
+          </>
         )}
       </div>
     </nav>
   );
 }
+
+const navLink = {
+  fontSize: 14, color: '#444', textDecoration: 'none',
+  padding: '7px 14px', borderRadius: 8, fontWeight: 500,
+};
