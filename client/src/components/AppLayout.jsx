@@ -27,7 +27,14 @@ export default function AppLayout({ children, title }) {
       }}>
         <div style={{ padding: '24px 20px 16px', borderBottom: '1px solid #F3F4F6' }}>
           <Link to="/">
-            <img src="/logo.png" alt="BloodSync" style={{ height: 36 }} />
+           <img 
+           src="/logo.png" 
+           alt="logo"
+           style={{
+           height: 48,         
+           width: 'auto',
+           display: 'block',
+           objectFit: 'contain' }}/>
           </Link>
         </div>
 

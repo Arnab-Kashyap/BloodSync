@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import AppLayout from '../components/AppLayout';
 import api from '../api/axios';
 
 const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -24,9 +24,7 @@ export default function Emergency() {
     contactPhone: '', message: '', urgency: 'urgent',
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,103 +40,153 @@ export default function Emergency() {
     }
   };
 
+  const input = {
+    width: '100%', padding: '9px 12px',
+    border: '1.5px solid #E5E7EB', borderRadius: 8,
+    fontSize: 13, fontFamily: 'inherit', outline: 'none',
+    boxSizing: 'border-box', background: 'white', color: '#111',
+  };
+
+  const label = {
+    fontSize: 11, fontWeight: 700, color: '#6B7280',
+    display: 'block', marginBottom: 5, letterSpacing: 0.4,
+    textTransform: 'uppercase',
+  };
+
+  const section = {
+    background: 'white', border: '1px solid #EBEBEB',
+    borderRadius: 12, padding: '20px 24px', marginBottom: 14,
+  };
+
+  const sectionTitle = {
+    fontSize: 13, fontWeight: 700, color: '#111',
+    marginBottom: 16, letterSpacing: '-0.2px',
+    paddingBottom: 12, borderBottom: '1px solid #F3F4F6',
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="max-w-xl mx-auto px-6 py-8">
-        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse flex-shrink-0" />
-          <span className="text-red-700 text-sm font-medium">Post an emergency blood request</span>
+    <AppLayout title="Post Emergency Request">
+      <div style={{ maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ background: '#FEF2F2', border: '1px solid #FDE8E8', borderRadius: 10, padding: '12px 16px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#8B0000', flexShrink: 0 }} />
+          <span style={{ fontSize: 13, color: '#8B0000', fontWeight: 500 }}>
+            This request will be visible to all registered donors. Please provide accurate information.
+          </span>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          {error && (
-            <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg px-4 py-3 text-sm mb-4">
-              {error}
-            </div>
-          )}
+        {error && (
+          <div style={{ background: '#FEF2F2', color: '#8B0000', border: '1px solid #FDE8E8', borderRadius: 8, padding: '10px 14px', fontSize: 13, marginBottom: 14 }}>{error}</div>
+        )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+        <form onSubmit={handleSubmit}>
+          <div style={section}>
+            <div style={sectionTitle}>Patient information</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 120px', gap: 14 }}>
               <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">Patient name</label>
-                <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400"
-                  name="patientName" placeholder="Ravi Das"
-                  value={form.patientName} onChange={handleChange} required />
+                <label style={label}>Patient name</label>
+                <input style={input} name="patientName" placeholder="Full name" value={form.patientName} onChange={handleChange} required />
               </div>
               <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">Blood group</label>
-                <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400 bg-white"
-                  name="bloodGroup" value={form.bloodGroup} onChange={handleChange} required>
+                <label style={label}>Blood group required</label>
+                <select style={input} name="bloodGroup" value={form.bloodGroup} onChange={handleChange} required>
                   <option value="">Select</option>
                   {BLOOD_GROUPS.map(bg => <option key={bg}>{bg}</option>)}
                 </select>
               </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">Units needed</label>
-                <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400"
-                  name="units" type="number" min="1" max="10"
-                  value={form.units} onChange={handleChange} required />
-              </div>
-              <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">Urgency</label>
-                <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400 bg-white"
-                  name="urgency" value={form.urgency} onChange={handleChange}>
-                  <option value="critical">Critical</option>
-                  <option value="urgent">Urgent</option>
-                  <option value="moderate">Moderate</option>
-                </select>
+                <label style={label}>Units needed</label>
+                <input style={input} name="units" type="number" min="1" max="10" value={form.units} onChange={handleChange} required />
               </div>
             </div>
+          </div>
 
-            <div>
-              <label className="text-xs font-medium text-gray-500 block mb-1">Hospital name</label>
-              <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400"
-                name="hospital" placeholder="GMCH Guwahati"
-                value={form.hospital} onChange={handleChange} required />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
+          <div style={section}>
+            <div style={sectionTitle}>Hospital & location</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
+              <div style={{ gridColumn: '1 / -1' }}>
+                <label style={label}>Hospital name</label>
+                <input style={input} name="hospital" placeholder="e.g. GMCH Guwahati" value={form.hospital} onChange={handleChange} required />
+              </div>
               <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">State</label>
-                <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400 bg-white"
-                  name="state" value={form.state} onChange={handleChange} required>
+                <label style={label}>State</label>
+                <select style={input} name="state" value={form.state} onChange={handleChange} required>
                   <option value="">Select state</option>
                   {STATES.map(s => <option key={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs font-medium text-gray-500 block mb-1">City</label>
-                <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400"
-                  name="city" placeholder="Guwahati"
-                  value={form.city} onChange={handleChange} required />
+                <label style={label}>City</label>
+                <input style={input} name="city" placeholder="e.g. Guwahati" value={form.city} onChange={handleChange} required />
+              </div>
+              <div>
+                <label style={label}>Contact phone</label>
+                <input style={input} name="contactPhone" placeholder="9876543210" value={form.contactPhone} onChange={handleChange} required />
               </div>
             </div>
+          </div>
 
-            <div>
-              <label className="text-xs font-medium text-gray-500 block mb-1">Contact phone</label>
-              <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400"
-                name="contactPhone" placeholder="9876543210"
-                value={form.contactPhone} onChange={handleChange} required />
+          <div style={section}>
+            <div style={sectionTitle}>Urgency & details</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 14 }}>
+              <div>
+                <label style={label}>Urgency level</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+                  {[
+                    { val: 'critical', label: 'Critical', desc: 'Immediate — within hours', color: '#8B0000', bg: '#FEF2F2' },
+                    { val: 'urgent', label: 'Urgent', desc: 'Within 24 hours', color: '#92400E', bg: '#FFFBEB' },
+                    { val: 'moderate', label: 'Moderate', desc: 'Within a few days', color: '#1E40AF', bg: '#EFF6FF' },
+                  ].map(u => (
+                    <label key={u.val} style={{
+                      display: 'flex', alignItems: 'center', gap: 10,
+                      padding: '10px 12px', borderRadius: 8, cursor: 'pointer',
+                      border: `1.5px solid ${form.urgency === u.val ? u.color : '#E5E7EB'}`,
+                      background: form.urgency === u.val ? u.bg : 'white',
+                      transition: 'all 0.15s',
+                    }}>
+                      <input type="radio" name="urgency" value={u.val} checked={form.urgency === u.val} onChange={handleChange} style={{ display: 'none' }} />
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: form.urgency === u.val ? u.color : '#D1D5DB', flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: form.urgency === u.val ? u.color : '#374151' }}>{u.label}</div>
+                        <div style={{ fontSize: 11, color: '#9CA3AF' }}>{u.desc}</div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label style={label}>Additional message <span style={{ color: '#C4C9D4', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
+                <textarea
+                  style={{ ...input, resize: 'none', height: 132, verticalAlign: 'top' }}
+                  name="message"
+                  placeholder="Any additional information for donors — medical condition, timing, special requirements..."
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={6}
+                />
+              </div>
             </div>
+          </div>
 
-            <div>
-              <label className="text-xs font-medium text-gray-500 block mb-1">Message <span className="text-gray-400">(optional)</span></label>
-              <textarea className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-red-400 resize-none"
-                name="message" placeholder="Any additional details..."
-                rows={3} value={form.message} onChange={handleChange} />
-            </div>
-
-            <button type="submit" disabled={loading}
-              className="w-full bg-red-600 hover:bg-red-500 text-white rounded-lg py-2.5 text-sm font-medium transition-colors">
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button type="submit" disabled={loading} style={{
+              flex: 1, padding: '12px',
+              background: '#8B0000', color: 'white',
+              border: 'none', borderRadius: 8,
+              fontSize: 14, fontWeight: 800,
+              cursor: 'pointer', fontFamily: 'inherit',
+            }}>
               {loading ? 'Posting...' : 'Post Emergency Request'}
             </button>
-          </form>
-        </div>
+            <button type="button" onClick={() => navigate(-1)} style={{
+              padding: '12px 24px', background: 'white', color: '#374151',
+              border: '1px solid #E5E7EB', borderRadius: 8,
+              fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+            }}>
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
-    </div>
+    </AppLayout>
   );
 }
