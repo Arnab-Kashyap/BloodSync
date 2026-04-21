@@ -14,7 +14,7 @@ export default function Landing() {
         zIndex: 100,
       }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/logo.png" alt="BloodSync" style={{ height: 160 }} />
+          <img src="/logo.png" alt="BloodSync" style={{ height: 48 }} />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
