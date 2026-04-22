@@ -37,9 +37,8 @@ export default function Register() {
   };
 
   const label = {
-    fontSize: 11, fontWeight: 700,
-    color: '#6B7280', display: 'block', marginBottom: 4,
-    letterSpacing: 0.5,
+    fontSize: 11, fontWeight: 700, color: '#6B7280',
+    display: 'block', marginBottom: 4, letterSpacing: 0.5,
   };
 
   return (
@@ -52,66 +51,37 @@ export default function Register() {
         padding: '3rem 3.5rem', flexShrink: 0,
         position: 'relative', overflow: 'hidden',
       }}>
-        <div style={{ position: 'absolute', bottom: -120, right: -120, width: 450, height: 450, borderRadius: '50%', background: 'rgba(0,0,0,0.2)' }} />
-        <div style={{ position: 'absolute', top: -100, left: -100, width: 320, height: 320, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
+        <div style={{ position: 'absolute', bottom: -140, right: -140, width: 480, height: 480, borderRadius: '50%', background: 'rgba(0,0,0,0.2)' }} />
+        <div style={{ position: 'absolute', top: -80, left: -80, width: 300, height: 300, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
 
         <div style={{ position: 'relative', zIndex: 2 }}>
-          <img
-            src="/logo.png"
-            alt="BloodSync"
-            style={{ height: 72, filter: 'brightness(0) invert(1)' }}
-          />
+          <img src="/logo.png" alt="BloodSync" style={{ height: 72, filter: 'brightness(0) invert(1)' }} />
         </div>
 
-        <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 0' }}>
-          <span style={{
-            fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.6)',
-            letterSpacing: 2, display: 'block', marginBottom: 16,
-          }}>JOIN 8,200+ DONORS</span>
-
-          <h2 style={{
-            fontSize: 52, fontWeight: 900, color: 'white',
-            letterSpacing: '-2px', lineHeight: 1.05, marginBottom: 20,
-          }}>
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: 2, display: 'block', marginBottom: 20 }}>
+            JOIN 8,200+ DONORS
+          </span>
+          <h2 style={{ fontSize: 62, fontWeight: 900, color: 'white', letterSpacing: '-2.5px', lineHeight: 1.02, margin: '0 0 24px' }}>
             Become a<br />
             <span style={{ color: '#FFAAAA' }}>Lifesaver</span><br />
             Today.
           </h2>
-
-          <p style={{
-            fontSize: 15, color: 'rgba(255,255,255,0.6)',
-            lineHeight: 1.8, maxWidth: 360, marginBottom: 40,
-          }}>
+          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, maxWidth: 380, margin: 0 }}>
             Register as a donor and be the reason someone gets to go home to their family today.
           </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            {[
-              { title: 'Free to register — always', desc: 'No hidden fees, no subscriptions, ever' },
-              { title: 'Private and secure', desc: 'Your data is protected and never shared' },
-              { title: '1 donation, 3 lives saved', desc: 'Each donation can save up to 3 people' },
-            ].map(f => (
-              <div key={f.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#FFAAAA', flexShrink: 0, marginTop: 7 }} />
-                <div>
-                  <div style={{ fontSize: 15, fontWeight: 800, color: 'white', marginBottom: 3 }}>{f.title}</div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>{f.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.12)', marginBottom: 22 }} />
-          <div style={{ display: 'flex', gap: 36 }}>
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.12)', marginBottom: 24 }} />
+          <div style={{ display: 'flex', gap: 40 }}>
             {[
               { num: '8,200+', label: 'Registered donors' },
               { num: '28', label: 'States covered' },
               { num: '94%', label: 'Requests fulfilled' },
             ].map(s => (
               <div key={s.label}>
-                <div style={{ fontSize: 24, fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>{s.num}</div>
+                <div style={{ fontSize: 26, fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>{s.num}</div>
                 <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 3, letterSpacing: 0.3 }}>{s.label}</div>
               </div>
             ))}
@@ -173,12 +143,9 @@ export default function Register() {
               <input style={input} name="city" placeholder="Guwahati" value={form.city} onChange={handleChange} required />
             </div>
             <button type="submit" disabled={loading} style={{
-              width: '100%', padding: '11px',
-              background: '#8B0000', color: 'white',
-              border: 'none', borderRadius: 50,
-              fontSize: 14, fontWeight: 800,
-              cursor: 'pointer', fontFamily: 'inherit',
-              marginTop: 4, letterSpacing: '0.3px',
+              width: '100%', padding: '11px', background: '#8B0000', color: 'white',
+              border: 'none', borderRadius: 50, fontSize: 14, fontWeight: 800,
+              cursor: 'pointer', fontFamily: 'inherit', marginTop: 4, letterSpacing: '0.3px',
             }}>
               {loading ? 'Creating account...' : 'Register as Donor →'}
             </button>
@@ -186,7 +153,7 @@ export default function Register() {
 
           <div style={{ height: 1, background: '#F3F4F6', margin: '16px 0' }} />
 
-          <p style={{ textAlign: 'center', fontSize: 12, color: '#6B7280' }}>
+          <p style={{ textAlign: 'center', fontSize: 12, color: '#6B7280', margin: 0 }}>
             Already have an account?{' '}
             <Link to="/login" style={{ color: '#8B0000', fontWeight: 700, textDecoration: 'none' }}>Sign in</Link>
           </p>
