@@ -14,7 +14,7 @@ export default function Landing() {
         zIndex: 100,
       }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/logo.png" alt="BloodSync" style={{ height: 48 }} />
+          <img src="/logo.png" alt="BloodSync" style={{ height: 58 }} />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -41,7 +41,7 @@ export default function Landing() {
             fontSize: 14, color: 'white', textDecoration: 'none',
             padding: '8px 22px', borderRadius: 50,
             background: '#CC0000', fontWeight: 600,
-          }}>Join as Donor →</Link>
+          }}>Join as Donor</Link>
         </div>
       </nav>
 
@@ -55,9 +55,7 @@ export default function Landing() {
             background: 'white', border: '1px solid #F5C6C2',
             borderRadius: 50, padding: '6px 16px', marginBottom: 28,
           }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#CC0000">
-              <path d="M12 2C12 2 4 9 4 14a8 8 0 0016 0C20 9 12 2 12 2z"/>
-            </svg>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#CC0000' }} />
             <span style={{ fontSize: 12, fontWeight: 600, color: '#CC0000', letterSpacing: 0.5 }}>
               REAL-TIME BLOOD MATCHING
             </span>
@@ -85,20 +83,20 @@ export default function Landing() {
               textDecoration: 'none', padding: '14px 30px',
               background: '#CC0000', color: 'white',
               borderRadius: 50, fontSize: 15, fontWeight: 700,
-            }}>I Am a Donor →</Link>
+            }}>I Am a Donor</Link>
             <Link to="/search" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               textDecoration: 'none', padding: '14px 28px',
               background: 'white', color: '#111',
               borderRadius: 50, fontSize: 15, fontWeight: 600,
               border: '1.5px solid #E5E7EB',
-            }}>🏥 Find Blood Now</Link>
+            }}>Find Blood Now</Link>
           </div>
 
           <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
             {['Verified donors', 'Free forever', 'India-wide network'].map(t => (
               <span key={t} style={{ fontSize: 13, color: '#9CA3AF', display: 'flex', alignItems: 'center', gap: 5 }}>
-                <span style={{ color: '#16A34A', fontWeight: 800 }}>✓</span> {t}
+                <span style={{ color: '#16A34A', fontWeight: 800 }}>&#10003;</span> {t}
               </span>
             ))}
           </div>
@@ -121,14 +119,14 @@ export default function Landing() {
           }} />
           <div style={{
             position: 'absolute', top: '50%', left: '50%',
-            transform: 'translate(-50%, -58%)',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <svg width="110" height="140" viewBox="0 0 100 130">
-              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="#CC0000" opacity="0.12"/>
-              <path d="M50 5C50 5 8 52 8 78a42 42 0 0084 0C92 52 50 5 50 5z" fill="none" stroke="#CC0000" strokeWidth="2" opacity="0.3"/>
-              <path d="M50 22C50 22 20 60 20 78a30 30 0 0060 0C80 60 50 22 50 22z" fill="#CC0000"/>
-              <path d="M50 40C50 40 34 64 34 76a16 16 0 0032 0C66 64 50 40 50 40z" fill="#FF1A1A" opacity="0.55"/>
-            </svg>
+            <img
+              src="/icon.png"
+              alt="BloodSync Icon"
+              style={{ width: 130, height: 130, objectFit: 'contain' }}
+            />
           </div>
 
           <div style={{ position: 'absolute', top: 24, right: 0, ...floatCard }}>
@@ -141,7 +139,7 @@ export default function Landing() {
 
           <div style={{ position: 'absolute', top: '40%', left: -16, ...floatCard }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 16 }}>📍</span>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#CC0000' }} />
               <span style={{ fontSize: 13, fontWeight: 700 }}>3 donors nearby</span>
             </div>
           </div>
@@ -149,13 +147,13 @@ export default function Landing() {
           <div style={{ position: 'absolute', bottom: 80, right: -10, ...floatCard, borderColor: '#FDE8E8' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#CC0000' }} />
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#CC0000' }}>CRITICAL — A− Needed</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#CC0000' }}>CRITICAL — A- Needed</span>
             </div>
             <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 3 }}>GMCH Guwahati · 2 min ago</div>
           </div>
 
           <div style={{ position: 'absolute', bottom: 16, left: 0, ...floatCard, background: '#F0FDF4', borderColor: '#BBF7D0' }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#16A34A' }}>✓ Donation Complete</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#16A34A' }}>Donation Complete</span>
             <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 3 }}>+1 life saved today</div>
           </div>
         </div>
@@ -171,14 +169,14 @@ export default function Landing() {
           display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 20,
         }}>
           {[
-            { icon: '🩸', num: '12,450+ Lives' },
-            { icon: '👥', num: '8,200+ Donors' },
-            { icon: '🏥', num: '340 Hospitals' },
-            { icon: '⚡', num: '< 8 min response' },
+            { num: '12,450+ Lives', label: 'saved' },
+            { num: '8,200+ Donors', label: 'registered' },
+            { num: '340 Hospitals', label: 'covered' },
+            { num: '< 8 min', label: 'avg. response' },
           ].map(s => (
             <div key={s.num} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 18 }}>{s.icon}</span>
               <span style={{ fontSize: 15, fontWeight: 800, color: '#CC0000' }}>{s.num}</span>
+              <span style={{ fontSize: 13, color: '#9CA3AF' }}>{s.label}</span>
             </div>
           ))}
         </div>
@@ -193,9 +191,9 @@ export default function Landing() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
           {[
-            { step: '01', icon: '🔍', title: 'Search donors', desc: 'Enter blood group and city. Our smart algorithm ranks donors by availability, proximity, and reliability.' },
-            { step: '02', icon: '🚨', title: 'Post emergency', desc: 'Need blood urgently? Post a request in seconds. Matching donors in your area are shown instantly.' },
-            { step: '03', icon: '📞', title: 'Connect & save', desc: 'Call the donor directly. No middlemen, no delays. Real people helping real people.' },
+            { step: '01', title: 'Search donors', desc: 'Enter blood group and city. Our algorithm ranks donors by availability, proximity, and reliability.' },
+            { step: '02', title: 'Post emergency', desc: 'Need blood urgently? Post a request in seconds. Matching donors in your area are shown instantly.' },
+            { step: '03', title: 'Connect and save', desc: 'Call the donor directly. No middlemen, no delays. Real people helping real people.' },
           ].map(s => (
             <div key={s.step} style={{
               background: 'white', borderRadius: 20,
@@ -207,7 +205,6 @@ export default function Landing() {
                 fontSize: 52, fontWeight: 900, color: '#FDE8E8',
                 lineHeight: 1, letterSpacing: '-2px',
               }}>{s.step}</div>
-              <div style={{ fontSize: 32, marginBottom: 16 }}>{s.icon}</div>
               <h3 style={{ fontSize: 18, fontWeight: 800, marginBottom: 10, color: '#0F0F0F' }}>{s.title}</h3>
               <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.7 }}>{s.desc}</p>
             </div>
@@ -225,18 +222,20 @@ export default function Landing() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 16 }}>
             {[
-              { icon: '🤖', title: 'AI Assistant', desc: 'Ask about compatibility, eligibility, and donation guidelines — powered by Gemini AI.' },
-              { icon: '📊', title: 'Smart Matching', desc: 'Donors ranked by availability, proximity, cooldown status, and response rate.' },
-              { icon: '🩸', title: 'Compatibility Logic', desc: 'O− donors appear in O+ searches. Full WHO compatibility built in.' },
-              { icon: '📍', title: 'India-Wide', desc: 'All 28 states covered. City search with automatic state-wide fallback.' },
+              { title: 'AI Assistant', desc: 'Ask about compatibility, eligibility, and donation guidelines — powered by OpenRouter AI.' },
+              { title: 'Smart Matching', desc: 'Donors ranked by availability, proximity, cooldown status, and response rate.' },
+              { title: 'Compatibility Logic', desc: 'O- donors appear in O+ searches. Full WHO compatibility built in.' },
+              { title: 'India-Wide', desc: 'All 28 states covered. City search with automatic state-wide fallback.' },
             ].map(f => (
               <div key={f.title} style={{ background: 'white', borderRadius: 16, border: '1px solid #F3F4F6', padding: '24px' }}>
                 <div style={{
                   width: 44, height: 44, borderRadius: 12,
                   background: '#FFF0EF', display: 'flex',
                   alignItems: 'center', justifyContent: 'center',
-                  fontSize: 22, marginBottom: 14,
-                }}>{f.icon}</div>
+                  marginBottom: 14,
+                }}>
+                  <img src="/icon.png" alt="" style={{ width: 26, height: 26, objectFit: 'contain' }} />
+                </div>
                 <h3 style={{ fontSize: 15, fontWeight: 800, marginBottom: 8, color: '#0F0F0F' }}>{f.title}</h3>
                 <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.65 }}>{f.desc}</p>
               </div>
@@ -257,7 +256,7 @@ export default function Landing() {
             textDecoration: 'none', padding: '14px 32px',
             background: 'white', color: '#CC0000',
             borderRadius: 50, fontSize: 15, fontWeight: 800,
-          }}>Register as Donor →</Link>
+          }}>Register as Donor</Link>
           <Link to="/search" style={{
             textDecoration: 'none', padding: '14px 32px',
             background: 'transparent', color: 'white',
@@ -267,16 +266,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer style={{
         background: '#0F0F0F', padding: '32px 6%',
         display: 'flex', alignItems: 'center',
         justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
       }}>
-        <span style={{ fontWeight: 800, fontSize: 16, color: 'white' }}>
-          <span style={{ color: '#C0392B' }}>Blood</span>Sync
-        </span>
-        <span style={{ fontSize: 13, color: '#4B5563' }}>Built with ❤️ for saving lives · India · 2026</span>
+        <img src="/logo.png" alt="BloodSync" style={{ height: 36, filter: 'brightness(0) invert(1)' }} />
+        <span style={{ fontSize: 13, color: '#4B5563' }}>Built for saving lives · India · 2026</span>
         <div style={{ display: 'flex', gap: 20 }}>
           {[{ label: 'Find Donors', to: '/search' }, { label: 'Requests', to: '/requests' }, { label: 'Register', to: '/register' }].map(l => (
             <Link key={l.label} to={l.to} style={{ fontSize: 13, color: '#6B7280', textDecoration: 'none' }}>{l.label}</Link>
@@ -301,4 +297,4 @@ const sectionBadge = {
   fontSize: 12, fontWeight: 700,
   padding: '5px 16px', borderRadius: 50,
   border: '1px solid #FDE8E8', letterSpacing: 0.5,
-}; 
+};
