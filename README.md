@@ -75,11 +75,7 @@ cd client && npm run dev   # http://localhost:5173
 - [x] Smart donor search with compatibility logic
 - [x] Emergency request system
 - [x] AI chatbot (OpenRouter)
-- [x] Professional UI with sidebar layout
 - [x] Deployed on Vercel + Render
-- [ ] SMS notifications
-- [ ] Email verification
-- [ ] PWA mobile support
 
 ---
 
