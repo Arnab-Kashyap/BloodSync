@@ -9,11 +9,13 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true
+  origin: [
+    'http://localhost:5173',
+    'https://bloodsync.vercel.app',
+    'https://bloodsync-arnab-kashyap.vercel.app',
+  ],
+  credentials: true,
 }));
-app.use(express.json());
-
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/search', require('./routes/search'));
