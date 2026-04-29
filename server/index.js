@@ -11,12 +11,12 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'https://blood-sync-nine.vercel.app',
     'https://bloodsync.vercel.app',
     'https://bloodsync-arnab-kashyap.vercel.app',
   ],
   credentials: true,
 }));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
