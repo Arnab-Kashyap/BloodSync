@@ -1,6 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Landing() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", background: '#FFF8F8', minHeight: '100vh' }}>
 
@@ -31,17 +40,46 @@ export default function Landing() {
           ))}
         </div>
 
-        <div style={{ display: 'flex', gap: 10 }}>
-          <Link to="/login" style={{
-            fontSize: 14, color: '#111', textDecoration: 'none',
-            padding: '8px 20px', borderRadius: 50,
-            border: '1.5px solid #ddd', fontWeight: 500, background: 'white',
-          }}>Sign In</Link>
-          <Link to="/register" style={{
-            fontSize: 14, color: 'white', textDecoration: 'none',
-            padding: '8px 22px', borderRadius: 50,
-            background: '#CC0000', fontWeight: 600,
-          }}>Join as Donor</Link>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          {user ? (
+            <>
+              <Link to="/dashboard" style={{
+                fontSize: 14, color: '#111', textDecoration: 'none',
+                padding: '8px 20px', borderRadius: 50,
+                border: '1.5px solid #ddd', fontWeight: 500, background: 'white',
+              }}>Dashboard</Link>
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                background: '#FFF0EF', border: '1px solid #FDE8E8',
+                borderRadius: 50, padding: '5px 14px 5px 6px', cursor: 'pointer',
+              }} onClick={handleLogout}>
+                <div style={{
+                  width: 30, height: 30, borderRadius: '50%',
+                  background: '#CC0000', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center',
+                  fontSize: 11, fontWeight: 800, color: 'white', flexShrink: 0,
+                }}>
+                  {user.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                </div>
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#CC0000' }}>
+                  {user.name?.split(' ')[0]}
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/login" style={{
+                fontSize: 14, color: '#111', textDecoration: 'none',
+                padding: '8px 20px', borderRadius: 50,
+                border: '1.5px solid #ddd', fontWeight: 500, background: 'white',
+              }}>Sign In</Link>
+              <Link to="/register" style={{
+                fontSize: 14, color: 'white', textDecoration: 'none',
+                padding: '8px 22px', borderRadius: 50,
+                background: '#CC0000', fontWeight: 600,
+              }}>Join as Donor</Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -78,12 +116,21 @@ export default function Landing() {
           </p>
 
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 28 }}>
-            <Link to="/register" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              textDecoration: 'none', padding: '14px 30px',
-              background: '#CC0000', color: 'white',
-              borderRadius: 50, fontSize: 15, fontWeight: 700,
-            }}>I Am a Donor</Link>
+            {user ? (
+              <Link to="/dashboard" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                textDecoration: 'none', padding: '14px 30px',
+                background: '#CC0000', color: 'white',
+                borderRadius: 50, fontSize: 15, fontWeight: 700,
+              }}>Go to Dashboard</Link>
+            ) : (
+              <Link to="/register" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                textDecoration: 'none', padding: '14px 30px',
+                background: '#CC0000', color: 'white',
+                borderRadius: 50, fontSize: 15, fontWeight: 700,
+              }}>I Am a Donor</Link>
+            )}
             <Link to="/search" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               textDecoration: 'none', padding: '14px 28px',
@@ -122,11 +169,7 @@ export default function Landing() {
             transform: 'translate(-50%, -50%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <img
-              src="/icon.png"
-              alt="BloodSync Icon"
-              style={{ width: 130, height: 130, objectFit: 'contain' }}
-            />
+            <img src="/icon.png" alt="BloodSync Icon" style={{ width: 130, height: 130, objectFit: 'contain' }} />
           </div>
 
           <div style={{ position: 'absolute', top: 24, right: 0, ...floatCard }}>
@@ -252,11 +295,19 @@ export default function Landing() {
           Join 8,200+ donors across India making a difference every day.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/register" style={{
-            textDecoration: 'none', padding: '14px 32px',
-            background: 'white', color: '#CC0000',
-            borderRadius: 50, fontSize: 15, fontWeight: 800,
-          }}>Register as Donor</Link>
+          {user ? (
+            <Link to="/dashboard" style={{
+              textDecoration: 'none', padding: '14px 32px',
+              background: 'white', color: '#CC0000',
+              borderRadius: 50, fontSize: 15, fontWeight: 800,
+            }}>Go to Dashboard</Link>
+          ) : (
+            <Link to="/register" style={{
+              textDecoration: 'none', padding: '14px 32px',
+              background: 'white', color: '#CC0000',
+              borderRadius: 50, fontSize: 15, fontWeight: 800,
+            }}>Register as Donor</Link>
+          )}
           <Link to="/search" style={{
             textDecoration: 'none', padding: '14px 32px',
             background: 'transparent', color: 'white',
