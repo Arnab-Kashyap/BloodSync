@@ -42,9 +42,16 @@ export default function Register() {
   };
 
   return (
-    <div style={{ height: '100vh', display: 'flex', fontFamily: "'DM Sans', sans-serif", overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', fontFamily: "'DM Sans', sans-serif" }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .register-left { display: none !important; }
+          .register-right { width: 100% !important; padding: 1.5rem !important; align-items: flex-start !important; }
+          .register-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
 
-      <div style={{
+      <div className="register-left" style={{
         width: '50%', background: '#8B0000',
         display: 'flex', flexDirection: 'column',
         justifyContent: 'space-between',
@@ -60,7 +67,7 @@ export default function Register() {
 
         <div style={{ position: 'relative', zIndex: 2 }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: 2, display: 'block', marginBottom: 20 }}>
-            JOIN 8,200+ DONORS
+            JOIN AS A DONOR
           </span>
           <h2 style={{ fontSize: 62, fontWeight: 900, color: 'white', letterSpacing: '-2.5px', lineHeight: 1.02, margin: '0 0 24px' }}>
             Become a<br />
@@ -76,12 +83,12 @@ export default function Register() {
           <div style={{ height: 1, background: 'rgba(255,255,255,0.12)', marginBottom: 24 }} />
           <div style={{ display: 'flex', gap: 40 }}>
             {[
-              { num: '8,200+', label: 'Registered donors' },
+              { num: '8 Groups', label: 'all compatible' },
               { num: '28', label: 'States covered' },
-              { num: '94%', label: 'Requests fulfilled' },
+              { num: '< 1 min', label: 'to post request' },
             ].map(s => (
               <div key={s.label}>
-                <div style={{ fontSize: 26, fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>{s.num}</div>
+                <div style={{ fontSize: 22, fontWeight: 900, color: 'white', letterSpacing: '-1px' }}>{s.num}</div>
                 <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 3, letterSpacing: 0.3 }}>{s.label}</div>
               </div>
             ))}
@@ -89,8 +96,16 @@ export default function Register() {
         </div>
       </div>
 
-      <div style={{ width: '50%', background: '#FFF8F8', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', overflow: 'hidden' }}>
-        <div style={{ background: 'white', borderRadius: 20, border: '1px solid #E5E7EB', padding: '2rem', width: '100%', maxWidth: 440, boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
+      <div className="register-right" style={{
+        width: '50%', background: '#FFF8F8',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '2rem', overflowY: 'auto',
+      }}>
+        <div style={{
+          background: 'white', borderRadius: 20, border: '1px solid #E5E7EB',
+          padding: '2rem', width: '100%', maxWidth: 440,
+          boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <img src="/logo.png" alt="BloodSync" style={{ height: 40 }} />
             <div>
@@ -104,7 +119,7 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div className="register-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <div>
                 <label style={label}>FULL NAME</label>
                 <input style={input} name="name" placeholder="Rahul Bora" value={form.name} onChange={handleChange} required />
@@ -122,7 +137,7 @@ export default function Register() {
               <label style={label}>PASSWORD</label>
               <input style={input} name="password" type="password" placeholder="Min 6 characters" value={form.password} onChange={handleChange} required minLength={6} />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div className="register-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <div>
                 <label style={label}>BLOOD GROUP</label>
                 <select style={input} name="bloodGroup" value={form.bloodGroup} onChange={handleChange} required>
