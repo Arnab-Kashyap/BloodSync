@@ -47,7 +47,19 @@ export default function Dashboard() {
 
   return (
     <AppLayout title="Dashboard">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 20 }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .stats-grid { grid-template-columns: 1fr 1fr !important; }
+          .dash-mid-grid { grid-template-columns: 1fr !important; }
+          .requests-table-header { display: none !important; }
+          .requests-table-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+          .dash-action-grid { grid-template-columns: 1fr !important; }
+          .req-location-col { display: none !important; }
+          .req-time-col { display: none !important; }
+        }
+      `}</style>
+
+      <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 20 }}>
         {stats.map(s => (
           <div key={s.label} style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '18px 20px' }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: '#9CA3AF', letterSpacing: 0.5, marginBottom: 8, textTransform: 'uppercase' }}>{s.label}</div>
@@ -57,9 +69,9 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="dash-mid-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '20px' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16, letterSpacing: '-0.2px' }}>Availability</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16 }}>Availability</div>
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '14px 16px', borderRadius: 10,
@@ -72,16 +84,14 @@ export default function Dashboard() {
                 {isAvailable ? 'You are available' : 'You are unavailable'}
               </div>
               <div style={{ fontSize: 12, color: isAvailable ? '#4ADE80' : '#9CA3AF', marginTop: 2 }}>
-                {isAvailable ? 'Visible to requesters in your area' : 'Hidden from all search results'}
+                {isAvailable ? 'Visible to requesters' : 'Hidden from search'}
               </div>
             </div>
-            <div
-              onClick={!loadingToggle ? handleToggle : undefined}
-              style={{
-                width: 44, height: 24, borderRadius: 12, cursor: 'pointer',
-                background: isAvailable ? '#16A34A' : '#D1D5DB',
-                position: 'relative', transition: 'background 0.25s', flexShrink: 0,
-              }}>
+            <div onClick={!loadingToggle ? handleToggle : undefined} style={{
+              width: 44, height: 24, borderRadius: 12, cursor: 'pointer',
+              background: isAvailable ? '#16A34A' : '#D1D5DB',
+              position: 'relative', transition: 'background 0.25s', flexShrink: 0,
+            }}>
               <div style={{
                 width: 18, height: 18, background: 'white', borderRadius: '50%',
                 position: 'absolute', top: 3, left: isAvailable ? 23 : 3,
@@ -95,7 +105,7 @@ export default function Dashboard() {
         </div>
 
         <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '20px' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16, letterSpacing: '-0.2px' }}>Profile summary</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16 }}>Profile summary</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
             <div style={{
               width: 44, height: 44, borderRadius: '50%',
@@ -105,24 +115,24 @@ export default function Dashboard() {
             }}>
               {user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>{user?.name}</div>
-              <div style={{ fontSize: 12, color: '#9CA3AF' }}>{user?.email}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#111', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</div>
+              <div style={{ fontSize: 12, color: '#9CA3AF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</div>
             </div>
-            <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 16, padding: '5px 10px', borderRadius: 8 }}>
+            <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 14, padding: '4px 8px', borderRadius: 8, flexShrink: 0 }}>
               {user?.bloodGroup}
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
             {[
               { label: 'City', value: user?.city },
               { label: 'State', value: user?.state },
               { label: 'Phone', value: user?.phone },
-              { label: 'Member since', value: new Date(user?.createdAt || Date.now()).getFullYear() },
+              { label: 'Since', value: new Date(user?.createdAt || Date.now()).getFullYear() },
             ].map(f => (
-              <div key={f.label} style={{ background: '#F9FAFB', borderRadius: 8, padding: '10px 12px' }}>
-                <div style={{ fontSize: 10, fontWeight: 600, color: '#9CA3AF', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 3 }}>{f.label}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#111' }}>{f.value}</div>
+              <div key={f.label} style={{ background: '#F9FAFB', borderRadius: 8, padding: '8px 10px' }}>
+                <div style={{ fontSize: 10, fontWeight: 600, color: '#9CA3AF', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 2 }}>{f.label}</div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#111', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.value}</div>
               </div>
             ))}
           </div>
@@ -131,40 +141,41 @@ export default function Dashboard() {
 
       <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', letterSpacing: '-0.2px' }}>Recent emergency requests</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#111' }}>Recent emergency requests</div>
           <Link to="/requests" style={{ fontSize: 12, color: '#8B0000', textDecoration: 'none', fontWeight: 600 }}>View all</Link>
         </div>
 
         {requests.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '32px', color: '#9CA3AF', fontSize: 13 }}>No active requests right now</div>
+          <div style={{ textAlign: 'center', padding: '24px', color: '#9CA3AF', fontSize: 13 }}>No active requests right now</div>
         ) : (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr 120px 120px 80px', gap: 12, padding: '0 12px 10px', borderBottom: '1px solid #F3F4F6', marginBottom: 4 }}>
-              {['Group', 'Patient & Hospital', 'Location', 'Urgency', 'Action'].map(h => (
+            <div className="requests-table-header" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 120px 120px 80px', gap: 12, padding: '0 12px 10px', borderBottom: '1px solid #F3F4F6', marginBottom: 4 }}>
+              {['Group', 'Patient & Hospital', 'Location', 'Urgency', 'Time'].map(h => (
                 <div key={h} style={{ fontSize: 10, fontWeight: 700, color: '#9CA3AF', letterSpacing: 0.5, textTransform: 'uppercase' }}>{h}</div>
               ))}
             </div>
             {requests.map(req => {
               const uc = urgencyColor(req.urgency);
               return (
-                <div key={req._id} style={{ display: 'grid', gridTemplateColumns: '80px 1fr 120px 120px 80px', gap: 12, alignItems: 'center', padding: '12px', borderRadius: 8, borderBottom: '1px solid #F9FAFB' }}>
-                  <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 14, padding: '4px 10px', borderRadius: 6, width: 'fit-content' }}>{req.bloodGroup}</div>
+                <div key={req._id} className="requests-table-row" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 120px 120px 80px', gap: 12, alignItems: 'center', padding: '12px', borderRadius: 8, borderBottom: '1px solid #F9FAFB' }}>
+                  <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 13, padding: '3px 8px', borderRadius: 6, width: 'fit-content' }}>{req.bloodGroup}</div>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: '#111' }}>{req.patientName}</div>
                     <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 1 }}>{req.hospital}</div>
+                    <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 1 }}>{req.city}, {req.state} · {timeAgo(req.createdAt)}</div>
                   </div>
-                  <div style={{ fontSize: 12, color: '#6B7280' }}>{req.city}, {req.state}</div>
+                  <div className="req-location-col" style={{ fontSize: 12, color: '#6B7280' }}>{req.city}, {req.state}</div>
                   <div style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: uc.bg, color: uc.color, border: `1px solid ${uc.border}`, width: 'fit-content' }}>
                     {req.urgency.charAt(0).toUpperCase() + req.urgency.slice(1)}
                   </div>
-                  <div style={{ fontSize: 11, color: '#9CA3AF' }}>{timeAgo(req.createdAt)}</div>
+                  <div className="req-time-col" style={{ fontSize: 11, color: '#9CA3AF' }}>{timeAgo(req.createdAt)}</div>
                 </div>
               );
             })}
           </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 16 }}>
+        <div className="dash-action-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 16 }}>
           <Link to="/emergency" style={{ textAlign: 'center', textDecoration: 'none', background: '#8B0000', color: 'white', padding: '10px', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>
             Post Emergency Request
           </Link>
