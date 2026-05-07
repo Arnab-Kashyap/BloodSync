@@ -60,12 +60,20 @@ export default function Emergency() {
 
   const sectionTitle = {
     fontSize: 13, fontWeight: 700, color: '#111',
-    marginBottom: 16, letterSpacing: '-0.2px',
-    paddingBottom: 12, borderBottom: '1px solid #F3F4F6',
+    marginBottom: 16, paddingBottom: 12, borderBottom: '1px solid #F3F4F6',
   };
 
   return (
     <AppLayout title="Post Emergency Request">
+      <style>{`
+        @media (max-width: 768px) {
+          .patient-grid { grid-template-columns: 1fr !important; }
+          .hospital-grid { grid-template-columns: 1fr !important; }
+          .urgency-grid { grid-template-columns: 1fr !important; }
+          .emerg-section { padding: 16px !important; }
+        }
+      `}</style>
+
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <div style={{ background: '#FEF2F2', border: '1px solid #FDE8E8', borderRadius: 10, padding: '12px 16px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#8B0000', flexShrink: 0 }} />
@@ -79,9 +87,9 @@ export default function Emergency() {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={section}>
+          <div className="emerg-section" style={section}>
             <div style={sectionTitle}>Patient information</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 120px', gap: 14 }}>
+            <div className="patient-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 120px', gap: 14 }}>
               <div>
                 <label style={label}>Patient name</label>
                 <input style={input} name="patientName" placeholder="Full name" value={form.patientName} onChange={handleChange} required />
@@ -100,13 +108,13 @@ export default function Emergency() {
             </div>
           </div>
 
-          <div style={section}>
+          <div className="emerg-section" style={section}>
             <div style={sectionTitle}>Hospital & location</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
-              <div style={{ gridColumn: '1 / -1' }}>
-                <label style={label}>Hospital name</label>
-                <input style={input} name="hospital" placeholder="e.g. GMCH Guwahati" value={form.hospital} onChange={handleChange} required />
-              </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={label}>Hospital name</label>
+              <input style={input} name="hospital" placeholder="e.g. GMCH Guwahati" value={form.hospital} onChange={handleChange} required />
+            </div>
+            <div className="hospital-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
               <div>
                 <label style={label}>State</label>
                 <select style={input} name="state" value={form.state} onChange={handleChange} required>
@@ -125,9 +133,9 @@ export default function Emergency() {
             </div>
           </div>
 
-          <div style={section}>
+          <div className="emerg-section" style={section}>
             <div style={sectionTitle}>Urgency & details</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 14 }}>
+            <div className="urgency-grid" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 14 }}>
               <div>
                 <label style={label}>Urgency level</label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
@@ -158,7 +166,7 @@ export default function Emergency() {
                 <textarea
                   style={{ ...input, resize: 'none', height: 132, verticalAlign: 'top' }}
                   name="message"
-                  placeholder="Any additional information for donors — medical condition, timing, special requirements..."
+                  placeholder="Any additional information for donors..."
                   value={form.message}
                   onChange={handleChange}
                   rows={6}
@@ -167,9 +175,9 @@ export default function Emergency() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 10 }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button type="submit" disabled={loading} style={{
-              flex: 1, padding: '12px',
+              flex: 1, minWidth: 160, padding: '12px',
               background: '#8B0000', color: 'white',
               border: 'none', borderRadius: 8,
               fontSize: 14, fontWeight: 800,

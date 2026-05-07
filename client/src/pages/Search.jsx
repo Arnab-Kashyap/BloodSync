@@ -21,6 +21,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [meta, setMeta] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -28,6 +29,7 @@ export default function Search() {
     e.preventDefault();
     setLoading(true);
     setSearched(true);
+    setShowFilters(false);
     try {
       const params = new URLSearchParams({ bloodGroup: form.bloodGroup, state: form.state, ...(form.city && { city: form.city }) });
       const { data } = await api.get(`/search?${params}`);
@@ -53,49 +55,72 @@ export default function Search() {
     textTransform: 'uppercase',
   };
 
+  const filterPanel = (
+    <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '20px' }}>
+      <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16 }}>Search filters</div>
+      <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <div>
+          <label style={label}>Blood group</label>
+          <select style={select} name="bloodGroup" value={form.bloodGroup} onChange={handleChange} required>
+            <option value="">Select group</option>
+            {BLOOD_GROUPS.map(bg => <option key={bg}>{bg}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={label}>State</label>
+          <select style={select} name="state" value={form.state} onChange={handleChange} required>
+            <option value="">Select state</option>
+            {STATES.map(s => <option key={s}>{s}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={label}>City <span style={{ color: '#C4C9D4', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
+          <input style={select} name="city" value={form.city} onChange={handleChange} placeholder="e.g. Guwahati" />
+        </div>
+        <div style={{ borderTop: '1px solid #F3F4F6', paddingTop: 14 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', letterSpacing: 0.4, textTransform: 'uppercase', marginBottom: 8 }}>Compatibility note</div>
+          <div style={{ fontSize: 12, color: '#9CA3AF', lineHeight: 1.6 }}>
+            Compatible donors are automatically included. Searching O+ also shows O- donors.
+          </div>
+        </div>
+        <button type="submit" disabled={loading} style={{
+          width: '100%', padding: '10px', background: '#8B0000', color: 'white',
+          border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700,
+          cursor: 'pointer', fontFamily: 'inherit',
+        }}>
+          {loading ? 'Searching...' : 'Search Donors'}
+        </button>
+      </form>
+    </div>
+  );
+
   return (
     <AppLayout title="Find Donors">
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 16, alignItems: 'start' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .search-layout { grid-template-columns: 1fr !important; }
+          .filter-sidebar { display: none !important; }
+          .filter-sidebar.mobile-open { display: block !important; margin-bottom: 16px; }
+          .filter-toggle-btn { display: flex !important; }
+          .donor-card-right { flex-wrap: wrap; gap: 8px !important; }
+          .match-score { display: none !important; }
+        }
+        .filter-toggle-btn { display: none; }
+      `}</style>
 
-        <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '20px', position: 'sticky', top: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#111', marginBottom: 16, letterSpacing: '-0.2px' }}>Search filters</div>
-          <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div>
-              <label style={label}>Blood group</label>
-              <select style={select} name="bloodGroup" value={form.bloodGroup} onChange={handleChange} required>
-                <option value="">Select group</option>
-                {BLOOD_GROUPS.map(bg => <option key={bg}>{bg}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={label}>State</label>
-              <select style={select} name="state" value={form.state} onChange={handleChange} required>
-                <option value="">Select state</option>
-                {STATES.map(s => <option key={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={label}>City <span style={{ color: '#C4C9D4', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
-              <input style={select} name="city" value={form.city} onChange={handleChange} placeholder="e.g. Guwahati" />
-            </div>
+      <button className="filter-toggle-btn" onClick={() => setShowFilters(p => !p)} style={{
+        width: '100%', padding: '10px', marginBottom: 12,
+        background: 'white', border: '1px solid #EBEBEB',
+        borderRadius: 8, fontSize: 13, fontWeight: 600,
+        cursor: 'pointer', fontFamily: 'inherit', color: '#374151',
+        alignItems: 'center', justifyContent: 'center', gap: 8,
+      }}>
+        {showFilters ? 'Hide Filters' : 'Show Filters'}
+      </button>
 
-            <div style={{ borderTop: '1px solid #F3F4F6', paddingTop: 14, marginTop: 2 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', letterSpacing: 0.4, textTransform: 'uppercase', marginBottom: 10 }}>Compatibility note</div>
-              <div style={{ fontSize: 12, color: '#9CA3AF', lineHeight: 1.6 }}>
-                Compatible donors are automatically included. For example, searching O+ also shows O- donors.
-              </div>
-            </div>
-
-            <button type="submit" disabled={loading} style={{
-              width: '100%', padding: '10px',
-              background: '#8B0000', color: 'white',
-              border: 'none', borderRadius: 8,
-              fontSize: 13, fontWeight: 700,
-              cursor: 'pointer', fontFamily: 'inherit', marginTop: 4,
-            }}>
-              {loading ? 'Searching...' : 'Search Donors'}
-            </button>
-          </form>
+      <div className="search-layout" style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 16, alignItems: 'start' }}>
+        <div className={`filter-sidebar ${showFilters ? 'mobile-open' : ''}`} style={{ position: 'sticky', top: 0 }}>
+          {filterPanel}
         </div>
 
         <div>
@@ -107,7 +132,7 @@ export default function Search() {
                 </svg>
               </div>
               <div style={{ fontSize: 15, fontWeight: 700, color: '#111', marginBottom: 6 }}>Find a donor</div>
-              <div style={{ fontSize: 13, color: '#9CA3AF' }}>Select blood group and state to search for available donors</div>
+              <div style={{ fontSize: 13, color: '#9CA3AF' }}>Select blood group and state to search</div>
             </div>
           )}
 
@@ -143,18 +168,16 @@ export default function Search() {
                       <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#FFF0EF', border: '1.5px solid #FDE8E8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#8B0000', flexShrink: 0 }}>
                         {initials}
                       </div>
-
-                      <div style={{ flex: 1 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 700, color: '#111', marginBottom: 3 }}>{donor.name}</div>
-                        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                           <span style={{ fontSize: 12, color: '#6B7280' }}>{donor.city}, {donor.state}</span>
                           <span style={{ fontSize: 12, color: '#6B7280' }}>{donor.donationCount} donations</span>
-                          {daysSince !== null && <span style={{ fontSize: 12, color: '#6B7280' }}>Last donated {daysSince}d ago</span>}
+                          {daysSince !== null && <span style={{ fontSize: 12, color: '#6B7280' }}>Last {daysSince}d ago</span>}
                         </div>
                       </div>
-
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-                        <div>
+                      <div className="donor-card-right" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+                        <div className="match-score">
                           <div style={{ fontSize: 10, color: '#9CA3AF', fontWeight: 600, letterSpacing: 0.4, textTransform: 'uppercase', marginBottom: 4, textAlign: 'right' }}>Match</div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                             <div style={{ width: 64, height: 4, background: '#F3F4F6', borderRadius: 2, overflow: 'hidden' }}>
@@ -163,15 +186,13 @@ export default function Search() {
                             <span style={{ fontSize: 12, fontWeight: 700, color: '#374151' }}>{donor.score}</span>
                           </div>
                         </div>
-
                         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                           <div style={{ width: 7, height: 7, borderRadius: '50%', background: donor.isAvailable ? '#16A34A' : '#D1D5DB' }} />
                           <span style={{ fontSize: 12, color: donor.isAvailable ? '#16A34A' : '#9CA3AF', fontWeight: 500 }}>
                             {donor.isAvailable ? 'Available' : 'Unavailable'}
                           </span>
                         </div>
-
-                        <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 15, padding: '5px 10px', borderRadius: 8 }}>
+                        <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 14, padding: '4px 8px', borderRadius: 8 }}>
                           {donor.bloodGroup}
                         </div>
                       </div>

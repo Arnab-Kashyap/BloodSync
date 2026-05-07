@@ -39,9 +39,20 @@ export default function Requests() {
 
   return (
     <AppLayout title="Emergency Requests">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 13, color: '#6B7280', fontWeight: 500 }}>Filter by blood group:</span>
+      <style>{`
+        @media (max-width: 768px) {
+          .req-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+          .req-filter-row { width: 100%; }
+          .req-filter-row select { width: 100%; }
+          .req-post-btn { width: 100%; justify-content: center; }
+          .req-meta-row { flex-wrap: wrap; gap: 8px !important; }
+          .req-posted-by { display: none !important; }
+        }
+      `}</style>
+
+      <div className="req-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, gap: 10 }}>
+        <div className="req-filter-row" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: 13, color: '#6B7280', fontWeight: 500, whiteSpace: 'nowrap' }}>Filter:</span>
           <select
             value={bloodGroup}
             onChange={(e) => setBloodGroup(e.target.value)}
@@ -51,10 +62,11 @@ export default function Requests() {
             {BLOOD_GROUPS.map(bg => <option key={bg}>{bg}</option>)}
           </select>
         </div>
-        <Link to="/emergency" style={{
+        <Link to="/emergency" className="req-post-btn" style={{
           display: 'flex', alignItems: 'center', gap: 8,
           textDecoration: 'none', background: '#8B0000', color: 'white',
           padding: '8px 18px', borderRadius: 8, fontSize: 13, fontWeight: 700,
+          whiteSpace: 'nowrap',
         }}>
           <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#FFAAAA' }} />
           Post Request
@@ -84,27 +96,27 @@ export default function Requests() {
         {requests.map(req => {
           const uc = urgencyColor(req.urgency);
           return (
-            <div key={req._id} style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '18px 20px' }}>
+            <div key={req._id} style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '16px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 900, fontSize: 18, padding: '6px 12px', borderRadius: 8, flexShrink: 0, lineHeight: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 }}>
+                  <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 900, fontSize: 16, padding: '5px 10px', borderRadius: 8, flexShrink: 0, lineHeight: 1 }}>
                     {req.bloodGroup}
                   </div>
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: '#111', marginBottom: 3 }}>{req.patientName}</div>
-                    <div style={{ fontSize: 13, color: '#6B7280' }}>{req.hospital}</div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: '#111', marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{req.patientName}</div>
+                    <div style={{ fontSize: 12, color: '#6B7280', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{req.hospital}</div>
                   </div>
                 </div>
-                <div style={{ fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 20, background: uc.bg, color: uc.color, border: `1px solid ${uc.border}`, flexShrink: 0 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 20, background: uc.bg, color: uc.color, border: `1px solid ${uc.border}`, flexShrink: 0, whiteSpace: 'nowrap' }}>
                   {req.urgency.charAt(0).toUpperCase() + req.urgency.slice(1)}
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: 20, marginTop: 12, paddingTop: 12, borderTop: '1px solid #F3F4F6' }}>
+              <div className="req-meta-row" style={{ display: 'flex', gap: 16, marginTop: 12, paddingTop: 12, borderTop: '1px solid #F3F4F6' }}>
                 <span style={{ fontSize: 12, color: '#6B7280' }}>{req.city}, {req.state}</span>
                 <span style={{ fontSize: 12, color: '#6B7280' }}>{req.units} unit{req.units > 1 ? 's' : ''} needed</span>
                 <span style={{ fontSize: 12, color: '#6B7280' }}>{timeAgo(req.createdAt)}</span>
-                <span style={{ fontSize: 12, color: '#9CA3AF', marginLeft: 'auto' }}>Posted by {req.postedBy?.name}</span>
+                <span className="req-posted-by" style={{ fontSize: 12, color: '#9CA3AF', marginLeft: 'auto' }}>Posted by {req.postedBy?.name}</span>
               </div>
 
               {req.message && (
