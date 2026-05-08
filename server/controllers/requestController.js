@@ -25,7 +25,10 @@ const createRequest = async (req, res) => {
 const getRequests = async (req, res) => {
   try {
     const { state, bloodGroup } = req.query;
-    const query = { status: 'active' };
+    const query = {
+      status: 'active',
+      createdAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
+    };
 
     if (state) query.state = { $regex: new RegExp(state, 'i') };
     if (bloodGroup) query.bloodGroup = bloodGroup;
