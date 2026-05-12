@@ -23,18 +23,15 @@ export default function Requests() {
 
   useEffect(() => { fetchRequests(); }, [bloodGroup]);
 
-  const timeAgo = (date) => {
-    const mins = Math.floor((new Date() - new Date(date)) / 60000);
-    if (mins < 60) return `${mins}m ago`;
-    const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `${hrs}h ago`;
-    return `${Math.floor(hrs / 24)}d ago`;
-  };
-
   const urgencyColor = (u) => {
     if (u === 'critical') return { color: '#8B0000', bg: '#FEF2F2', border: '#FDE8E8' };
     if (u === 'urgent') return { color: '#92400E', bg: '#FFFBEB', border: '#FDE68A' };
     return { color: '#1E40AF', bg: '#EFF6FF', border: '#BFDBFE' };
+  };
+
+  const getExpiry = (createdAt) => {
+    const hoursLeft = Math.max(0, Math.round((new Date(createdAt).getTime() + 86400000 - Date.now()) / 3600000));
+    return { hoursLeft, urgent: hoursLeft < 3 };
   };
 
   return (
@@ -95,6 +92,7 @@ export default function Requests() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {requests.map(req => {
           const uc = urgencyColor(req.urgency);
+          const { hoursLeft, urgent: expiryUrgent } = getExpiry(req.createdAt);
           return (
             <div key={req._id} style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '16px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
@@ -107,15 +105,25 @@ export default function Requests() {
                     <div style={{ fontSize: 12, color: '#6B7280', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{req.hospital}</div>
                   </div>
                 </div>
-                <div style={{ fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 20, background: uc.bg, color: uc.color, border: `1px solid ${uc.border}`, flexShrink: 0, whiteSpace: 'nowrap' }}>
-                  {req.urgency.charAt(0).toUpperCase() + req.urgency.slice(1)}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                  <span style={{
+                    fontSize: 11, fontWeight: 600,
+                    color: expiryUrgent ? '#8B0000' : '#9CA3AF',
+                    background: expiryUrgent ? '#FEF2F2' : '#F9FAFB',
+                    border: `1px solid ${expiryUrgent ? '#FDE8E8' : '#F3F4F6'}`,
+                    padding: '3px 8px', borderRadius: 20,
+                  }}>
+                    {hoursLeft > 0 ? `Expires in ${hoursLeft}h` : 'Expiring soon'}
+                  </span>
+                  <div style={{ fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 20, background: uc.bg, color: uc.color, border: `1px solid ${uc.border}`, whiteSpace: 'nowrap' }}>
+                    {req.urgency.charAt(0).toUpperCase() + req.urgency.slice(1)}
+                  </div>
                 </div>
               </div>
 
               <div className="req-meta-row" style={{ display: 'flex', gap: 16, marginTop: 12, paddingTop: 12, borderTop: '1px solid #F3F4F6' }}>
                 <span style={{ fontSize: 12, color: '#6B7280' }}>{req.city}, {req.state}</span>
                 <span style={{ fontSize: 12, color: '#6B7280' }}>{req.units} unit{req.units > 1 ? 's' : ''} needed</span>
-                <span style={{ fontSize: 12, color: '#6B7280' }}>{timeAgo(req.createdAt)}</span>
                 <span className="req-posted-by" style={{ fontSize: 12, color: '#9CA3AF', marginLeft: 'auto' }}>Posted by {req.postedBy?.name}</span>
               </div>
 

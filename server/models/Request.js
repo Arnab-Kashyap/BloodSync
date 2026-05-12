@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const requestSchema = new mongoose.Schema(
   {
     postedBy: {
@@ -59,9 +58,12 @@ const requestSchema = new mongoose.Schema(
       enum: ['active', 'fulfilled', 'closed'],
       default: 'active',
     },
+    expiresAt: {
+      type: Date,
+      default: () => new Date(Date.now() + 24 * 60 * 60 * 1000),
+    },
   },
   { timestamps: true }
-  
 );
 
 module.exports = mongoose.model('Request', requestSchema);
