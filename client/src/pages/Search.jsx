@@ -74,7 +74,7 @@ export default function Search() {
           </select>
         </div>
         <div>
-          <label style={label}>City <span style={{ color: '#C4C9D4', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
+          <label style={label}>City</label>
           <input style={select} name="city" value={form.city} onChange={handleChange} placeholder="e.g. Guwahati" />
         </div>
         <div style={{ borderTop: '1px solid #F3F4F6', paddingTop: 14 }}>
@@ -155,7 +155,7 @@ export default function Search() {
               {donors.length === 0 && (
                 <div style={{ background: 'white', border: '1px solid #EBEBEB', borderRadius: 12, padding: '48px', textAlign: 'center' }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 6 }}>No donors found</div>
-                  <div style={{ fontSize: 13, color: '#9CA3AF' }}>Try searching state-wide or a different blood group</div>
+                  <div style={{ fontSize: 13, color: '#9CA3AF' }}>Try a different city or blood group</div>
                 </div>
               )}
 
@@ -168,6 +168,7 @@ export default function Search() {
                       <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#FFF0EF', border: '1.5px solid #FDE8E8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#8B0000', flexShrink: 0 }}>
                         {initials}
                       </div>
+
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 700, color: '#111', marginBottom: 3 }}>{donor.name}</div>
                         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -176,6 +177,7 @@ export default function Search() {
                           {daysSince !== null && <span style={{ fontSize: 12, color: '#6B7280' }}>Last {daysSince}d ago</span>}
                         </div>
                       </div>
+
                       <div className="donor-card-right" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
                         <div className="match-score">
                           <div style={{ fontSize: 10, color: '#9CA3AF', fontWeight: 600, letterSpacing: 0.4, textTransform: 'uppercase', marginBottom: 4, textAlign: 'right' }}>Match</div>
@@ -186,15 +188,26 @@ export default function Search() {
                             <span style={{ fontSize: 12, fontWeight: 700, color: '#374151' }}>{donor.score}</span>
                           </div>
                         </div>
+
                         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                           <div style={{ width: 7, height: 7, borderRadius: '50%', background: donor.isAvailable ? '#16A34A' : '#D1D5DB' }} />
                           <span style={{ fontSize: 12, color: donor.isAvailable ? '#16A34A' : '#9CA3AF', fontWeight: 500 }}>
                             {donor.isAvailable ? 'Available' : 'Unavailable'}
                           </span>
                         </div>
+
                         <div style={{ background: '#FFF0EF', border: '1.5px solid #FDE8E8', color: '#8B0000', fontWeight: 800, fontSize: 14, padding: '4px 8px', borderRadius: 8 }}>
                           {donor.bloodGroup}
                         </div>
+
+                        {donor.phone && (
+                          <a href={`tel:${donor.phone}`} style={{
+                            display: 'inline-flex', alignItems: 'center',
+                            textDecoration: 'none', background: '#8B0000', color: 'white',
+                            padding: '6px 14px', borderRadius: 6,
+                            fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap',
+                          }}>Call</a>
+                        )}
                       </div>
                     </div>
                   );
